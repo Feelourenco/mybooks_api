@@ -29,11 +29,11 @@ class UserController {
                 }
             });
 
-            return response.status(201).json({message: 'Usuário criado com sucesso !', user});
+            return response.status(201).json({message: 'Usuário cadastrado com sucesso!', user});
 
         } catch (error) {
             console.error(error);
-            response.status(500).json({ error: 'Erro no servidor...' });
+            response.status(500).json({ error: 'Ops! Parece que algo deu errado. Estamos trabalhando para resolver isso. Por favor, tente novamente mais tarde.' });
         }
     }
 
@@ -44,7 +44,7 @@ class UserController {
             const user = await prisma.user.findUnique({where: {email}})
             
             if(!user){
-                return response.status(400).json({ error: 'Usuário não existe!' });
+                return response.status(400).json({ error: 'Usuário não cadastrado!' });
             }
 
             const loginPassword = await bcrypt.compare(password, user.password);
@@ -53,11 +53,11 @@ class UserController {
                 return response.status(401).json({ error: 'Senha incorreta!' });
             }
 
-            return response.status(200).json({message: 'Login efetuado com sucesso !'});
+            return response.status(200).json({message: 'Login efetuado com sucesso!'});
             
         } catch (error) {
             console.log(error)
-            return response.status(500).json({error: 'Erro interno...'});
+            return response.status(500).json({error: 'Ops! Parece que algo deu errado. Estamos trabalhando para resolver isso. Por favor, tente novamente mais tarde.'});
         }
     }
 
