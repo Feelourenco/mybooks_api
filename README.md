@@ -12,7 +12,6 @@
     ```bash
     npm install
 
-
 3. **Gere as migrations:**
 
     ```bash
