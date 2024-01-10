@@ -8,7 +8,9 @@
     git clone https://github.com/seu-usuario/seu-projeto.git
 
 2. cd seu-projeto
-npm install
+    
+    ```bash
+    npm install
 
 
 3. **Gere as migrations:**
