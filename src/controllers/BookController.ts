@@ -13,7 +13,7 @@ class BookController {
 
       const book = await prisma.book.findFirst({
         where: {
-          name_book: book_name,
+          book_name: book_name,
           userId: userId
         }
       });
@@ -24,7 +24,7 @@ class BookController {
 
       await prisma.book.create({
         data: {
-            name_book: book_name,
+            book_name: book_name,
             resume: resume,
             userId: userId
         }
