@@ -66,6 +66,38 @@ class BookController {
         });
     }
   }
+
+  async getBook(request: Request, response: Response){
+    try {
+      
+      const {userId} = request.body;
+      const {bookId} = request.params;
+
+      const book = await prisma.book.findFirst({
+        where: {
+          id: parseInt(bookId, 10),
+          userId: userId
+        }
+      });
+
+      if (!userId) {
+        return response.status(400).json({ error: 'ID do usuário necessário!' });
+      }
+
+      if(!bookId){
+        return response.status(400).json({ error: 'Este Livro não existe !' });
+      }
+
+      return response.status(200).json(book);
+
+    } catch (error) {
+        console.error(error);
+        return response.status(500).json({
+            error: 'Ops! Parece que algo deu errado. Estamos trabalhando para resolver isso. Por favor, tente novamente mais tarde.'
+        });
+    }
+  }
 }
+
 
 export default BookController;
