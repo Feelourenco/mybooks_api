@@ -74,6 +74,45 @@ class UserController {
         }
     }
 
+    async getAllUsers(request: Request, response: Response){
+        try {
+            const users = await prisma.user.findMany({
+                select: {
+                  id: true,
+                  last_name: true,
+                  first_name: true,
+                  email: true,
+                  createdAt: true,
+                  updatedAt: true
+                },
+              });
+
+            return response.status(200).json({data: users})
+
+        } catch (error) {
+            console.error(error);
+            return response.status(500).json({
+                error: 'Ops! Parece que algo deu errado. Estamos trabalhando para resolver isso. Por favor, tente novamente mais tarde.'
+            });
+        }
+    }
+
+    async getUser(request: Request, response: Response){
+
+        const userID = parseInt(request.params.id, 10);
+
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userID,
+            }
+        });
+
+        if(!user){
+            return response.status(400).json({error: 'Usuário não encontrado !'})
+        }
+
+        return response.status(200).json(user);
+    }
 }
 
 export default UserController ;
